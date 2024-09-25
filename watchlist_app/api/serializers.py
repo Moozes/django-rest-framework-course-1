@@ -7,8 +7,19 @@ class WatchListSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+# class My(serializers.Serializer):
+#     id = serializers.CharField(read_only=True)
+
 class StreamPlatformSerializer(serializers.ModelSerializer):
-    watchlist = WatchListSerializer(many=True, read_only=True)
+    # watchlist = WatchListSerializer(many=True, read_only=True)
+    # watchlist = serializers.StringRelatedField(many=True)
+    # watchlist = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
+    # watchlist = My(many=True)
+    watchlist = serializers.HyperlinkedRelatedField(    
+        many=True,
+        read_only=True,
+        view_name='watch-detail'
+    )
     class Meta:
         model = StreamPlatform
         fields = "__all__"
