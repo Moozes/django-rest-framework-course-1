@@ -5,24 +5,13 @@ from watchlist_app.models import WatchList, StreamPlatform, Review
 from watchlist_app.api.serializers import WatchListSerializer, StreamPlatformSerializer, ReviewSerializer
 
 
-class Reviews(generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin):
-
+class Reviews(generics.ListCreateAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, *kwargs)
-
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, *kwargs)
-
-
-class ReviewDetail(generics.GenericAPIView, mixins.RetrieveModelMixin):
+class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, *kwargs)
 
 
 class WatchListAV(APIView):
