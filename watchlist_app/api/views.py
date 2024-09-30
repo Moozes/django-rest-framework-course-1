@@ -2,17 +2,25 @@ from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import status, generics, viewsets
 from rest_framework.views import APIView
+from rest_framework.exceptions import ValidationError
 from watchlist_app.models import WatchList, StreamPlatform, Review
 from watchlist_app.api.serializers import WatchListSerializer, StreamPlatformSerializer, ReviewSerializer
 
 
 class ReviewCreate(generics.CreateAPIView):
+    queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 
     def perform_create(self, serializer):
         pk = self.kwargs['pk']
         watchlist = WatchList.objects.get(pk=pk)
-        serializer.save(watchlist=watchlist)
+
+        user = self.request.user
+        user_reviews = Review.objects.filter(watchlist=watchlist, user=user)
+        if user_reviews.exists():
+            raise ValidationError("You have already reviewed this wathchlist")
+
+        serializer.save(watchlist=watchlist, user=user)
 
 
 class Reviews(generics.ListAPIView):
