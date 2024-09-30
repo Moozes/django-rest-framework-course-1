@@ -73,6 +73,6 @@ class WatchDetailAV(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class StreamPlatformAV(viewsets.ReadOnlyModelViewSet):
+class StreamPlatformAV(viewsets.ModelViewSet):
     queryset = StreamPlatform.objects.all()
     serializer_class = StreamPlatformSerializer
