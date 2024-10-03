@@ -36,6 +36,7 @@ class ReviewCreate(generics.CreateAPIView):
 
 class Reviews(generics.ListAPIView):
     serializer_class = ReviewSerializer
+    # here we are requiring the user to be authenticated to access review list
     permission_classes = [IsAuthenticated]
     
     def get_queryset(self):
