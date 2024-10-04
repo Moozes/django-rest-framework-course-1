@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # this authtoken app will create a one to one token table
     'rest_framework.authtoken',
     'watchlist_app',
+    'user_app'
 ]
 
 MIDDLEWARE = [

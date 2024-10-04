@@ -16,6 +16,7 @@ class ReviewCreate(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         pk = self.kwargs['pk']
+        # watchlist not found error is not handled, this will cause 500 status response
         watchlist = WatchList.objects.get(pk=pk)
 
         user = self.request.user
